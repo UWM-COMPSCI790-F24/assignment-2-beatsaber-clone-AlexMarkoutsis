@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://djhj0yjqh1xya"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_ierox"]
+
+[sub_resource type="Environment" id="Environment_odski"]
+ambient_light_source = 3
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_ierox")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Left Hand Controller" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
+tracker = &"left_hand"
+
+[node name="Right Hand Controller" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5)
+tracker = &"right_hand"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_odski")
