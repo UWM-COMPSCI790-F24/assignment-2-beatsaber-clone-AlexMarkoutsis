@@ -9,11 +9,12 @@ In this assignment, you will be implementing Beat Saber's core mechanics. You ca
 
 You should fill out this information before submitting your assignment.  Make sure to document the name and source of any third party assets such as 3D models, textures, or any other content used that was not solely written by you.  Include sufficient detail for the instructor or TA to easily find them, such as a download link.
 
-Name: 
+Name: Alex Markoutsis
 
-UWM Email:
+UWM Email: markout2@uwm.edu
 
 Third Party Assets:
+https://www.models-resource.com/xbox_360/avatarmarketplace/model/26433/ -> Lightsaber model used for hands (Colors edited in Blender)
 
 ## Getting Started
 
