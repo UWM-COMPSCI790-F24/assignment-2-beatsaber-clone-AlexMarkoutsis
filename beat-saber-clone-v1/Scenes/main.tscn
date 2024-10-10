@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://djhj0yjqh1xya"]
+[gd_scene load_steps=5 format=3 uid="uid://djhj0yjqh1xya"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_ierox"]
+[ext_resource type="PackedScene" uid="uid://iuedm7tufds6" path="res://Assets/Models/red_lightsaber.dae" id="2_fwu63"]
+[ext_resource type="PackedScene" uid="uid://fi3mvoenhh7f" path="res://Assets/Models/blue_lightsaber.dae" id="3_iykef"]
 
 [sub_resource type="Environment" id="Environment_odski"]
 ambient_light_source = 3
@@ -17,9 +19,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
 tracker = &"left_hand"
 
+[node name="red_lightsaber" parent="XROrigin3D/Left Hand Controller" instance=ExtResource("2_fwu63")]
+transform = Transform3D(0.11, 0, 0, 0, 0.0376222, 0.103366, 0, -0.103366, 0.0376222, 0, -0.1, 0.1)
+
 [node name="Right Hand Controller" type="XRController3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5)
 tracker = &"right_hand"
+
+[node name="blue_lightsaber" parent="XROrigin3D/Right Hand Controller" instance=ExtResource("3_iykef")]
+transform = Transform3D(0.11, 0, 0, 0, 0.0376222, 0.103366, 0, -0.103366, 0.0376222, 0, -0.1, 0.1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 
