@@ -14,7 +14,7 @@ Name: Alex Markoutsis
 UWM Email: markout2@uwm.edu
 
 Third Party Assets:
-https://www.models-resource.com/xbox_360/avatarmarketplace/model/26433/ -> Lightsaber model used for hands (Colors edited in Blender)
+Block break sound: https://www.zapsplat.com/music/science-fiction-punchy-impact-2/
 
 ## Getting Started
 
