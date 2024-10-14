@@ -3,6 +3,7 @@ extends XRController3D
 var entered_area = null
 var grabbed = null
 var last_pos
+var velocity = 0.0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -15,6 +16,8 @@ func _process(delta: float) -> void:
 	if grabbed != null:
 		var delta_pos = global_position - last_pos
 		grabbed.global_position += delta_pos
+		
+		velocity = delta_pos / delta
 		
 	last_pos = global_position
 
@@ -31,6 +34,10 @@ func _on_input_float_changed(name: String, value: float) -> void:
 	if name == "grip":
 		if grabbed == null and entered_area != null and value >= 0.2:
 			grabbed = entered_area.get_parent_node_3d()
+			#grabbed.set_freeze_enabled(true)
 			
 		if grabbed != null and value < 0.2:
+			#grabbed.set_freeze_enabled(false)
+			grabbed.linear_velocity = velocity
 			grabbed = null
+			velocity = 0.0

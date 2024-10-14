@@ -1,6 +1,3 @@
-// This script needs to be attached to a MeshInstance3D node
-// The MeshInstance3D node needs to have a new ImmediateMesh added to it
-
 extends MeshInstance3D
 
 @export var points = [Vector3(0,0,0),Vector3(0,5,0)]

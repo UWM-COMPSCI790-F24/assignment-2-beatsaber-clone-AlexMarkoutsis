@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Beat Saber Clone v1"
-run/main_scene="res://Scenes/main.tscn"
+run/main_scene="res://Scenes/Beat Saber Clone.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 

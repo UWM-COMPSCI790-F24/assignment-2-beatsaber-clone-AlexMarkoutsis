@@ -1,0 +1,122 @@
+[gd_scene load_steps=14 format=3 uid="uid://di263etqlyloh"]
+
+[ext_resource type="Script" path="res://Scripts/XRSetup.gd" id="1_m0rqn"]
+[ext_resource type="Material" uid="uid://bk0ic0plj5gr2" path="res://Assets/Materials/Ground.tres" id="3_bxlue"]
+[ext_resource type="Material" uid="uid://dmu1wrguk5mi2" path="res://Assets/Materials/Red Base.tres" id="4_ejxeb"]
+[ext_resource type="Material" uid="uid://bcfg3rq2bq2ha" path="res://Assets/Materials/Blue Base.tres" id="5_47fd8"]
+[ext_resource type="Material" uid="uid://d012s6v4crxio" path="res://Assets/Materials/Yellow Base.tres" id="6_0u70q"]
+[ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://Assets/Models/Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="6_d1o47"]
+[ext_resource type="PackedScene" uid="uid://bc8lh0rihgxvi" path="res://Assets/Models/Quest2Controllers/OculusQuest2TouchController_Right.gltf" id="7_kr4qj"]
+[ext_resource type="Script" path="res://Scripts/LineRenderer.gd" id="8_0hd6l"]
+
+[sub_resource type="Environment" id="Environment_ps4os"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_cfwgd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l2elc"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajkok"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_e7rs0"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_m0rqn")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ps4os")
+camera_attributes = SubResource("CameraAttributesPractical_cfwgd")
+
+[node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.862469, -0.276402, 0.423967, 0, 0.8377, 0.546131, -0.506109, -0.471022, 0.72249, 0, 2.04458, 0)
+
+[node name="Floor" type="StaticBody3D" parent="WorldEnvironment"]
+
+[node name="Hitbox" type="CollisionShape3D" parent="WorldEnvironment/Floor"]
+shape = SubResource("BoxShape3D_l2elc")
+
+[node name="Visual" type="CSGBox3D" parent="WorldEnvironment/Floor"]
+material_override = ExtResource("3_bxlue")
+size = Vector3(10, 0.1, 10)
+
+[node name="Red Block" type="RigidBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+gravity_scale = 0.2
+
+[node name="Visual" type="CSGBox3D" parent="WorldEnvironment/Red Block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+material_override = ExtResource("4_ejxeb")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Area3D" type="Area3D" parent="WorldEnvironment/Red Block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+collision_layer = 257
+collision_mask = 257
+
+[node name="Interaction Hitbox" type="CollisionShape3D" parent="WorldEnvironment/Red Block/Area3D"]
+shape = SubResource("BoxShape3D_ajkok")
+
+[node name="Physics Hitbox" type="CollisionShape3D" parent="WorldEnvironment/Red Block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_ajkok")
+
+[node name="Blue Block" type="RigidBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+gravity_scale = 0.2
+
+[node name="Visual" type="CSGBox3D" parent="WorldEnvironment/Blue Block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+material_override = ExtResource("5_47fd8")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Area3D" type="Area3D" parent="WorldEnvironment/Blue Block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+collision_layer = 257
+collision_mask = 257
+
+[node name="Interaction Hitbox" type="CollisionShape3D" parent="WorldEnvironment/Blue Block/Area3D"]
+shape = SubResource("BoxShape3D_ajkok")
+
+[node name="Physics Hitbox" type="CollisionShape3D" parent="WorldEnvironment/Blue Block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_ajkok")
+
+[node name="Yellow Block" type="RigidBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+gravity_scale = 0.2
+
+[node name="Visual" type="CSGBox3D" parent="WorldEnvironment/Yellow Block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+material_override = ExtResource("6_0u70q")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Area3D" type="Area3D" parent="WorldEnvironment/Yellow Block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+collision_layer = 257
+collision_mask = 257
+
+[node name="Interaction Hitbox" type="CollisionShape3D" parent="WorldEnvironment/Yellow Block/Area3D"]
+shape = SubResource("BoxShape3D_ajkok")
+
+[node name="Physics Hitbox" type="CollisionShape3D" parent="WorldEnvironment/Yellow Block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_ajkok")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="Left" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="OculusQuest2TouchController_Left" parent="XROrigin3D/Left" instance=ExtResource("6_d1o47")]
+
+[node name="Right" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="OculusQuest2TouchController_Right" parent="XROrigin3D/Right" instance=ExtResource("7_kr4qj")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/Right"]
+mesh = SubResource("ImmediateMesh_e7rs0")
+script = ExtResource("8_0hd6l")
