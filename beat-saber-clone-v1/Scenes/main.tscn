@@ -1,35 +1,66 @@
-[gd_scene load_steps=5 format=3 uid="uid://djhj0yjqh1xya"]
+[gd_scene load_steps=10 format=3 uid="uid://djhj0yjqh1xya"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_ierox"]
-[ext_resource type="PackedScene" uid="uid://iuedm7tufds6" path="res://Assets/Models/red_lightsaber.dae" id="2_fwu63"]
-[ext_resource type="PackedScene" uid="uid://fi3mvoenhh7f" path="res://Assets/Models/blue_lightsaber.dae" id="3_iykef"]
+[ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://Assets/Models/Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="2_0wmk3"]
+[ext_resource type="Script" path="res://Scenes/character.gd" id="2_74y0a"]
+[ext_resource type="Script" path="res://Scenes/ControllerInteraction.gd" id="3_7mgre"]
+[ext_resource type="PackedScene" uid="uid://bc8lh0rihgxvi" path="res://Assets/Models/Quest2Controllers/OculusQuest2TouchController_Right.gltf" id="3_0667w"]
 
-[sub_resource type="Environment" id="Environment_odski"]
-ambient_light_source = 3
+[sub_resource type="BoxShape3D" id="BoxShape3D_y2pdp"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="Environment" id="Environment_ps4os"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_cfwgd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajkok"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_ierox")
 
-[node name="XROrigin3D" type="XROrigin3D" parent="."]
+[node name="Character" type="XROrigin3D" parent="."]
+script = ExtResource("2_74y0a")
 
-[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+[node name="Eyes" type="XRCamera3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
-[node name="Left Hand Controller" type="XRController3D" parent="XROrigin3D"]
+[node name="LeftController" type="XRController3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
 tracker = &"left_hand"
 
-[node name="red_lightsaber" parent="XROrigin3D/Left Hand Controller" instance=ExtResource("2_fwu63")]
-transform = Transform3D(0.11, 0, 0, 0, 0.0376222, 0.103366, 0, -0.103366, 0.0376222, 0, -0.1, 0.1)
+[node name="Left Quest Controller" parent="Character/LeftController" instance=ExtResource("2_0wmk3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="Right Hand Controller" type="XRController3D" parent="XROrigin3D"]
+[node name="RightController" type="XRController3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5)
 tracker = &"right_hand"
+script = ExtResource("3_7mgre")
 
-[node name="blue_lightsaber" parent="XROrigin3D/Right Hand Controller" instance=ExtResource("3_iykef")]
-transform = Transform3D(0.11, 0, 0, 0, 0.0376222, 0.103366, 0, -0.103366, 0.0376222, 0, -0.1, 0.1)
+[node name="Right Quest Controller" parent="Character/RightController" instance=ExtResource("3_0667w")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="Area3D" type="Area3D" parent="Character/RightController"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/RightController/Area3D"]
+shape = SubResource("BoxShape3D_y2pdp")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_odski")
+environment = SubResource("Environment_ps4os")
+camera_attributes = SubResource("CameraAttributesPractical_cfwgd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+
+[node name="Collision Demo" type="CSGBox3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Area3D" type="Area3D" parent="WorldEnvironment/Collision Demo"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/Collision Demo/Area3D"]
+shape = SubResource("BoxShape3D_ajkok")
+
+[connection signal="input_float_changed" from="Character/RightController" to="Character/RightController" method="_on_input_float_changed"]
+[connection signal="area_entered" from="Character/RightController/Area3D" to="Character/RightController" method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Character/RightController/Area3D" to="Character/RightController" method="_on_area_3d_area_exited"]
