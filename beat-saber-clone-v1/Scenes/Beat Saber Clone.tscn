@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0vyh3k2cpduq"]
+[gd_scene load_steps=7 format=3 uid="uid://b0vyh3k2cpduq"]
 
 [ext_resource type="PackedScene" uid="uid://jwq752r2oviy" path="res://Scenes/Instances/Player.tscn" id="1_00kqp"]
-[ext_resource type="Material" uid="uid://bk0ic0plj5gr2" path="res://Assets/Materials/Ground.tres" id="2_yydih"]
-[ext_resource type="Script" path="res://Scripts/Block.gd" id="3_ahilh"]
-[ext_resource type="AudioStream" uid="uid://coxgt8ouw02tv" path="res://Assets/Sounds/Block_Break.wav" id="4_wwli6"]
+[ext_resource type="Script" path="res://Scripts/CubeSpawner.gd" id="1_t10iq"]
+[ext_resource type="Material" uid="uid://c2au3kdbof58x" path="res://Assets/Materials/Black_Base.tres" id="2_bvidq"]
 
 [sub_resource type="Environment" id="Environment_c06mt"]
 
@@ -11,9 +10,6 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_twrvg"]
 size = Vector3(20, 0.1, 20)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3s0i7"]
-size = Vector3(0.4, 0.4, 0.25)
 
 [node name="Node3D" type="Node3D"]
 
@@ -29,7 +25,7 @@ camera_attributes = SubResource("CameraAttributesPractical_qovjo")
 shape = SubResource("BoxShape3D_twrvg")
 
 [node name="Visual" type="CSGBox3D" parent="WorldEnvironment/Floor"]
-material_override = ExtResource("2_yydih")
+material_override = ExtResource("2_bvidq")
 size = Vector3(20, 0.1, 20)
 
 [node name="Up Light" type="DirectionalLight3D" parent="WorldEnvironment"]
@@ -38,18 +34,32 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 [node name="Down Light" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 0, 0)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -10)
-size = Vector3(0.4, 0.4, 0.25)
-script = ExtResource("3_ahilh")
+[node name="Ceiling" type="CSGBox3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+material_override = ExtResource("2_bvidq")
+size = Vector3(20, 0.1, 20)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CSGBox3D"]
-stream = ExtResource("4_wwli6")
-volume_db = 5.0
+[node name="Front Wall" type="CSGBox3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.5)
+material_override = ExtResource("2_bvidq")
+size = Vector3(20, 10, 1)
 
-[node name="Area3D" type="Area3D" parent="CSGBox3D"]
+[node name="Back Wall" type="CSGBox3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+material_override = ExtResource("2_bvidq")
+size = Vector3(20, 10, 1)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D/Area3D"]
-shape = SubResource("BoxShape3D_3s0i7")
+[node name="Left Wall" type="CSGBox3D" parent="WorldEnvironment"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 0)
+size = Vector3(20, 10, 1)
 
-[connection signal="area_entered" from="CSGBox3D/Area3D" to="CSGBox3D" method="_on_area_3d_area_entered"]
+[node name="Right Wall" type="CSGBox3D" parent="WorldEnvironment"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, 0)
+size = Vector3(20, 10, 1)
+
+[node name="Cube Spawner" type="Node3D" parent="."]
+script = ExtResource("1_t10iq")
+
+[node name="Timer" type="Timer" parent="Cube Spawner"]
+
+[connection signal="timeout" from="Cube Spawner/Timer" to="Cube Spawner" method="_on_timer_timeout"]

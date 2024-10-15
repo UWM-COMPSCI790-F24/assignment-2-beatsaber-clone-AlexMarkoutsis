@@ -1,21 +1,19 @@
 [gd_scene load_steps=3 format=3 uid="uid://bi2ouqg5aygp1"]
 
 [ext_resource type="Script" path="res://Scripts/PointingInteraction.gd" id="1_gdgkr"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_0djgw"]
-radius = 0.07
+[ext_resource type="AudioStream" uid="uid://coxgt8ouw02tv" path="res://Assets/Sounds/Block_Break.wav" id="2_ysfli"]
 
 [node name="Controller" type="XRController3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
 tracker = &"left_hand"
 script = ExtResource("1_gdgkr")
 
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 0, 0)
+collide_with_areas = true
+collide_with_bodies = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_0djgw")
+[node name="Block Break" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_ysfli")
 
 [connection signal="input_float_changed" from="." to="." method="_on_input_float_changed"]
-[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
-[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
